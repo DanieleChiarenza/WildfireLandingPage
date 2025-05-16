@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="WildFire Store è la community di giochi di carte a Roma. Tornei, shop, eventi e servizi per tutti gli appassionati.">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <title>WildFire Store - Community di Giochi di Carte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rosso-wildfire: #e30613;
+      --nero-wildfire: #111;
+      --bianco: #ffffff;
+      --grigio-chiaro: #f5f5f5;
+      --larghezza-contenuto: 1200px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--grigio-chiaro);
+      color: var(--nero-wildfire);
+    }
+
+    .wrapper {
+      background: url('SfondoWildfirestore.png') repeat-y center top;
+      background-size: cover;
+      width: 100%;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: var(--larghezza-contenuto);
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+      padding-top: 80px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1200px;
+      background-color: var(--bianco);
+      color: var(--nero-wildfire);
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 4px solid var(--rosso-wildfire);
+      height: 80px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      height: 100%;
+    }
+
+    .logo-img {
+      height: 50px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--nero-wildfire);
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      gap: 1px;
+      align-items: center;
+      height: 100%;
+    }
+
+    nav a {
+      color: var(--nero-wildfire);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0 1.2rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    nav a:hover {
+      background-color: var(--rosso-wildfire);
+      color: var(--bianco);
+    }
+
+    nav a:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--rosso-wildfire);
+    }
+
+    nav a.active {
+      background-color: var(--rosso-wildfire);
+      color: var(--bianco);
+    }
+
+    .carousel {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide-button {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--rosso-wildfire);
+      color: var(--bianco);
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease;
+      z-index: 15;
+    }
+
+    .slide-button:hover {
+      background-color: #b8000f;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: rgb(255, 255, 255);
+      background-color: var(--rosso-wildfire);
+      border: none;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s;
+      z-index: 10;
+    }
+
+    .arrow:hover {
+      background-color: #b8000f;
+    }
+
+    .arrow.left {
+      left: 20px;
+    }
+
+    .arrow.right {
+      right: 20px;
+    }
+
+    section {
+      padding: 5rem 2rem;
+      border-bottom: 1px solid #eee;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--rosso-wildfire);
+    }
+
+    section p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .footer-wrapper {
+      padding: 3rem 2rem;
+      background-color: var(--nero-wildfire);
+      color: var(--bianco);
+      text-align: center;
+    }
+
+    .footer-columns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .footer-column {
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .footer-column h4 {
+      margin-bottom: 1rem;
+      color: var(--rosso-wildfire);
+      font-size: 1.1rem;
+    }
+
+    .footer-column p,
+    .footer-column a {
+      color: var(--bianco);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-decoration: none;
+    }
+
+    .footer-column a:hover {
+      text-decoration: underline;
+      color: var(--rosso-wildfire);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #444;
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+
+    @media (max-width: 992px) {
+      header {
+        padding: 0 1rem;
+      }
+
+      nav a {
+        padding: 0 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      .brand {
+        width: 100%;
+        justify-content: center;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      nav a {
+        padding: 0.5rem 0.8rem;
+        height: auto;
+        font-size: 0.85rem;
+      }
+
+      .carousel {
+        height: 400px;
+      }
+
+      .slide h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+
+      <header>
+        <div class="brand">
+          <img src="logo.png" alt="WildFire Store Logo" class="logo-img" />
+          <div class="logo-text">WildFire Store</div>
+        </div>
+        <nav>
+          <a href="#home">Home</a>
+          <a href="#community">Community</a>
+          <a href="#tornei">Tornei</a>
+          <a href="#servizi">Servizi</a>
+          <a href="#contatti">Contatti</a>
+        </nav>
+      </header>
+
+      <div id="home" class="carousel">
+        <div class="slide active">
+          <img src="Sfondo1.png" alt="Torneo" />
+          <a href="http://commhundred.com" target="_blank" class="slide-button">Scopri Commanhundred</a>
+        </div>
+        <div class="slide">
+          <img src="sfondo2.jpg" alt="Eventi" />
+        </div>
+        <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+        <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+      </div>
+
+      <section id="community">
+        <h2>La Nostra Community</h2>
+        <p>WildFire Store è il cuore pulsante della scena dei giochi di carte collezionabili a Roma. Offriamo un ambiente dove ogni giocatore, dal principiante al competitivo, trova il proprio spazio. Organizziamo eventi regolari, supportiamo la crescita della community e valorizziamo ogni partecipante con attività coinvolgenti e premi esclusivi.</p>
+      </section>
+
+      <section id="tornei">
+        <h2>Prossimi Tornei</h2>
+        <p>Ogni settimana organizziamo tornei ufficiali per Magic: The Gathering, Yu-Gi-Oh!, Pokémon TCG, Disney Lorcana e One Piece. Partecipa per vincere premi, guadagnare punti ranking e vivere l’adrenalina della competizione in un’atmosfera amichevole e accogliente.</p>
+      </section>
+
+      <section id="servizi">
+        <h2>I Nostri Servizi</h2>
+        <p>Oltre ai tornei, WildFire Store offre vendita di carte singole, consulenza per la costruzione mazzi, un’area gioco dedicata per partite libere o testing, eventi prerelease, e serate dedicate. È anche possibile acquistare accessori, bustine e box dei tuoi giochi preferiti.</p>
+      </section>
+
+      <footer>
+        <div class="footer-wrapper">
+          <div class="footer-columns">
+            <div class="footer-column">
+              <h4>Contatti</h4>
+              <p>📍 Via della Fonte Meravigliosa, 64<br>00143 Roma RM</p>
+              <p>📞 <a href="tel:0695061442">06 9506 1442</a></p>
+              <p>📱 <a href="https://wa.me/393755299401">WhatsApp</a></p>
+            </div>
+            <div class="footer-column">
+              <h4>Orari di apertura</h4>
+              <p>Martedì: 11:00–13:00 / 15:30–01:30</p>
+              <p>Mercoledì: 11:00–13:00 / 15:30–19:30</p>
+              <p>Giovedì: 11:00–13:00 / 15:30–19:30</p>
+              <p>Venerdì: 11:00–13:00 / 15:30–01:30</p>
+              <p>Sabato: 11:00–13:00 / 15:30–19:30</p>
+              <p>Domenica: 11:00–19:30</p>
+              <p>Lunedì: Chiuso</p>
+            </div>
+            <div class="footer-column">
+              <h4>Seguici</h4>
+              <p>
+                <a href="https://www.instagram.com/wildfire_store/">Instagram</a><br>
+                <a href="https://www.facebook.com/Wildfirestore/?locale=it_IT">Facebook</a><br>
+                <a href="https://www.cardmarket.com/en/Magic/Users/Wildfirestore">CardMarket</a>
+              </p>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2025 WildFire Store Roma - Tutti i diritti riservati</p>
+            <p>P.IVA 12345678901</p>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(n) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    setInterval(nextSlide, 5000);
+    showSlide(0);
+
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll("nav a");
+      let current = "";
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute("id");
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+          // link.classList.add("active");
+        }
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll("section").forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
